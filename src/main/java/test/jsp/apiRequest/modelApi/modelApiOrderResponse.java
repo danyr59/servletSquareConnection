@@ -7,11 +7,17 @@ package test.jsp.apiRequest.modelApi;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.squareup.square.models.Fulfillment;
 import com.squareup.square.models.Money;
-import com.squareup.square.models.OrderLineItem;
+//import com.squareup.square.models.OrderLineItem;
+import com.squareup.square.models.OrderLineItemAppliedDiscount;
+import com.squareup.square.models.OrderLineItemAppliedServiceCharge;
+import com.squareup.square.models.OrderLineItemAppliedTax;
 import com.squareup.square.models.OrderLineItemDiscount;
+import com.squareup.square.models.OrderLineItemModifier;
+import com.squareup.square.models.OrderLineItemPricingBlocklists;
 import com.squareup.square.models.OrderLineItemTax;
-import com.squareup.square.models.OrderMoneyAmounts;
+//import com.squareup.square.models.OrderMoneyAmounts;
 import com.squareup.square.models.OrderPricingOptions;
+import com.squareup.square.models.OrderQuantityUnit;
 import com.squareup.square.models.OrderReturn;
 import com.squareup.square.models.OrderReward;
 import com.squareup.square.models.OrderRoundingAdjustment;
@@ -35,42 +41,46 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class modelApiOrderResponse {
 
-    @JsonIgnore
-
     public String createdAt;
     public String id;
 
-    @JsonIgnore
-    private OptionalNullable<List<OrderLineItem>> lineItems;
-    @JsonIgnore
+    private List<OrderLineItem> lineItems;
+
+    
+
     public String locationId;
-    @JsonIgnore
+
     public OrderMoneyAmounts netAmounts;
-    @JsonIgnore
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public class OrderMoneyAmounts {
+
+        Money totalMoney;
+        Money taxMoney;
+        Money discountMoney;
+        Money tipMoney;
+        Money serviceChargeMoney;
+    }
+
     public Money netAmountDueMoney;
 
     public OrderSource source;
-    @JsonIgnore
+
     public String state;
-    @JsonIgnore
 
     private Money totalDiscountMoney;
-    @JsonIgnore
 
     public Money totalMoney;
-    @JsonIgnore
 
     public Money totalServiceChargeMoney;
-    @JsonIgnore
 
     public Money totalTaxMoney;
-    @JsonIgnore
 
     public Money totalTipMoney;
-    @JsonIgnore
 
     public String updatedAt;
-    @JsonIgnore
 
     public Integer version;
 

@@ -12,7 +12,10 @@ import test.jsp.apiRequest.modelApiClient.ClientApiOrder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+//modelo para la respuesta
+import com.squareup.square.models.Order;
 
+import test.jsp.apiRequest.modelApi.modelApiOrderResponse;
 
 /**
  *
@@ -20,7 +23,7 @@ import retrofit2.Response;
  */
 public class orderRequestApi {
 
-    Retrofit retrofit = null;
+    public Retrofit retrofit = null;
 
     public orderRequestApi() {
         this.retrofit = new Retrofit.Builder()
@@ -31,19 +34,23 @@ public class orderRequestApi {
 
     public void runPromise(modelApiOrder order) throws InterruptedException {
         ClientApiOrder orderClient = this.retrofit.create(ClientApiOrder.class);
-        modelApiOrder order_ = new modelApiOrder("", "", order.getQuantityOrder(),order.getItemVariationId(), order.getLocation());
+        modelApiOrder order_ = new modelApiOrder("", "", order.getQuantityOrder(), order.getItemVariationId(), order.getLocation());
 
-        Call<modelApiOrder> call = orderClient.postModelApiOrder(order_);
-        call.enqueue(new Callback<modelApiOrder>() {
+        Call<modelApiOrderResponse> call = orderClient.postModelApiOrder(order_);
+        call.enqueue(new Callback<modelApiOrderResponse>() {
             @Override
-            public void onResponse(Call<modelApiOrder> call, Response<modelApiOrder> response) {
+            public void onResponse(Call<modelApiOrderResponse> call, Response<modelApiOrderResponse> response) {
                 //modelApiOrder order1 = response.body();
-                System.out.println(response.body());
+                modelApiOrderResponse orderBody = response.body();
+                System.out.println(orderBody);
+                System.out.println("En runPromise");
+                //System.out.println(response.body());
             }
+
             @Override
-            public void onFailure(Call<modelApiOrder> call, Throwable t){
+            public void onFailure(Call<modelApiOrderResponse> call, Throwable t) {
                 System.err.println(t.toString());
-                
+
             }
         });
 

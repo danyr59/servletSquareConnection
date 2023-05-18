@@ -2,8 +2,8 @@
 /home/danyr59/sources/jsp/src/main/java/test/jsp/model/order/Order.java
 /home/danyr59/sources/jsp/src/main/java/test/jsp/servletController/HelloServlet.java
 /home/danyr59/sources/jsp/src/main/java/test/jsp/apiRequest/orderRequestApi.java
+/home/danyr59/sources/jsp/src/main/java/test/jsp/apiRequest/modelApiClient/ClientApiOrder.java
 /home/danyr59/sources/jsp/src/main/java/test/jsp/JAXRSConfiguration.java
 /home/danyr59/sources/jsp/src/main/java/test/jsp/servletController/CreateOrderServlet.java
 /home/danyr59/sources/jsp/src/main/java/test/jsp/filter/CorsFilter.java
 /home/danyr59/sources/jsp/src/main/java/test/jsp/resource/SampleResource.java
-/home/danyr59/sources/jsp/src/main/java/test/jsp/apiRequest/modelApiClient/clientApiOrder.java

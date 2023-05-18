@@ -1,9 +1,10 @@
 test/jsp/apiRequest/modelApi/modelApiOrder.class
 test/jsp/servletController/HelloServlet.class
 test/jsp/model/order/Order.class
+test/jsp/apiRequest/modelApiClient/ClientApiOrder.class
 test/jsp/apiRequest/orderRequestApi.class
 test/jsp/resource/SampleResource.class
+test/jsp/apiRequest/orderRequestApi$1.class
 test/jsp/JAXRSConfiguration.class
-test/jsp/apiRequest/modelApiClient/clientApiOrder.class
 test/jsp/filter/CorsFilter.class
 test/jsp/servletController/CreateOrderServlet.class

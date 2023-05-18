@@ -31,7 +31,7 @@ public class orderRequestApi {
 
     public void runPromise(modelApiOrder order) throws InterruptedException {
         ClientApiOrder orderClient = this.retrofit.create(ClientApiOrder.class);
-        modelApiOrder order_ = new modelApiOrder("", "", "1", "jdfalksdjksla", "fkdajskasjdkf");
+        modelApiOrder order_ = new modelApiOrder("", "", order.getQuantityOrder(),order.getItemVariationId(), order.getLocation());
 
         Call<modelApiOrder> call = orderClient.postModelApiOrder(order_);
         call.enqueue(new Callback<modelApiOrder>() {

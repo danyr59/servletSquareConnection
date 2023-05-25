@@ -20,17 +20,18 @@
 
                 <ul id="nav-menu" class="hidden w-full space-y-2 pr-3 font-semibold text-xl text-right">
                     <li> <a href="create_order.jsp">Create Order</a> </li>
-                    <li>Menu Item</li>
-                    <li>Menu Item</li>
+                    
                 </ul>
             </div>
         </header>
-        <main class="flex flex-row  w-full h-full  justify-center justify-items-center items-center">
-            <h1 class="text-3xl font-bold underline"><%= "Hello World!" %></h1>
+        <main class="flex flex-col  w-full h-full  justify-center justify-items-center items-center">
+           
             <br/>
-            <a href="hello-servlet">Hi Servlet</a>
-            <a href="create_order.jsp">Hi otra cosa</a>
-            <div> <% out.print("osdkjaskjsakl"); %> </div>    
+            <a class="text-3xl font-bold underline" href="hello-servlet">Hi</a>
+            <br/>
+            <a class="text-3xl font-bold underline" href="create_order.jsp">Crear Orden</a>
+            
+            
         </main>
         <script type="text/javascript">
             document.getElementById("nav-icon").addEventListener('click',

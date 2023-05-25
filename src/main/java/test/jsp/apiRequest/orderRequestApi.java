@@ -32,19 +32,34 @@ public class orderRequestApi {
                 .build();
     }
 
-    public void runPromise(modelApiOrder order) throws InterruptedException {
+    public modelApiOrderResponse runPromise(modelApiOrder order) throws InterruptedException {
         ClientApiOrder orderClient = this.retrofit.create(ClientApiOrder.class);
-        modelApiOrder order_ = new modelApiOrder("", "", order.getQuantityOrder(), order.getItemVariationId(), order.getLocation());
+        modelApiOrder order_ = new modelApiOrder(order.getModifierId(), order.getQuantityModifier(), order.getQuantityOrder(), order.getItemVariationId(), order.getLocation());
 
+        modelApiOrderResponse orderBody = new modelApiOrderResponse();
+
+        
         Call<modelApiOrderResponse> call = orderClient.postModelApiOrder(order_);
+        //synchronous
+        try{
+            Response<modelApiOrderResponse> response =  call.execute();
+            orderBody.setModelApiOrderResponse(response.body());
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        
+        
+        //asynchronous
+        /*
         call.enqueue(new Callback<modelApiOrderResponse>() {
             @Override
             public void onResponse(Call<modelApiOrderResponse> call, Response<modelApiOrderResponse> response) {
                 //modelApiOrder order1 = response.body();
-                modelApiOrderResponse orderBody = response.body();
+                orderBody.setModelApiOrderResponse(response.body());
                 System.out.println(orderBody);
                 System.out.println("En runPromise");
                 //System.out.println(response.body());
+                
             }
 
             @Override
@@ -53,7 +68,8 @@ public class orderRequestApi {
 
             }
         });
-
+*/
+        return orderBody;
     }
 
 }

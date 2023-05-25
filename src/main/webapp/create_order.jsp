@@ -5,13 +5,13 @@
 <html class="w-full h-full">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-         <%@include file="includes/head.jsp" %> 
+        <%@include file="includes/head.jsp" %> 
         <title>Create Order</title>
     </head>
     <body class=" w-full h-full flex items-center justify-center">
         <form class="w-full max-w-lg" action="create-order" method="post">
             <div class="flex flex-wrap -mx-3 mb-6">
-                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <div class="w-full md:w- px-3 mb-6 md:mb-0">
 
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="location-id">
                         Location id
@@ -19,13 +19,15 @@
                     <input id="location-id" type="text" placeholder="12ASDF243DASF1" name="location-id" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" >
                     <p class="text-gray-600 text-xs italic">Please fill out this field.</p>
                 </div>
-                <div class="w-full md:w-1/2 px-3">
+                <!--<div class="w-full md:w-1/2 px-3">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="idempotency-key">
                         Idempotency key
                     </label>
                     <input id="idempotency-key" type="text" placeholder="AKSJFKAS1234JAKSDJK1234" name="idempotency-key"  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" >
                     <p class="text-gray-600 text-xs italic">please you try it that it UUID be Unique</p>
-                </div>
+                </div> 
+                -->
+
             </div>
             <!-- 
             <div class="flex flex-wrap -mx-3 mb-6">
@@ -37,7 +39,7 @@
                     <p class="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
                 </div>
             </div>
-             -->
+            -->
             <div class="flex flex-wrap -mx-3 mb-2">
                 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="quantity-product">
@@ -62,7 +64,7 @@
                     </div>
                 </div>
                 -->
-                
+
                 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="catalog-object-id">
                         Catalog Object Id
@@ -71,16 +73,38 @@
                     <p class="text-gray-600 text-xs italic">This id has to be unique</p>
                 </div>
             </div>
-             <div class="flex flex-wrap -mx-3 mb-6">
-                <div class="w-full px-3">
-                    
-                    <button class="appearance-none block w-full bg-gray-200 text-gray-600 border border-gray-600 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-900"  type="submit" >
-                        Send
-                    </button>   
-                    
-                    
-                </div>
+
+
+        </div>
+        <div class="flex flex-wrap -mx-3 mb-2">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="quantity-modifier">
+                    Quantity Modifier
+                </label>
+                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="quantity-modifier"  name="quantity-modifier" type="number" placeholder="1">
             </div>
-        </form>
-    </body>
+            
+
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="modifier-id">
+                    Modifier Id
+                </label>
+                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="modifier-id" name="modifier-id" type="text" placeholder="AS786AFSD6F8AS">
+                <p class="text-gray-600 text-xs italic">This id has to be unique</p>
+            </div>
+        </div>
+
+
+        <div class="flex flex-wrap -mx-3 mb-6">
+            <div class="w-full px-3">
+
+                <button class="appearance-none block w-full bg-gray-200 text-gray-600 border border-gray-600 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-900"  type="submit" >
+                    Send
+                </button>   
+
+
+            </div>
+        </div>
+    </form>
+</body>
 </html>

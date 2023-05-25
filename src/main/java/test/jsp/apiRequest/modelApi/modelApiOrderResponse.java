@@ -43,13 +43,8 @@ public class modelApiOrderResponse {
 
     public String createdAt;
     public String id;
-
-    private List<OrderLineItem> lineItems;
-
-    
-
+    public List<OrderLineItem> lineItems;
     public String locationId;
-
     public OrderMoneyAmounts netAmounts;
 
     @Data
@@ -63,25 +58,34 @@ public class modelApiOrderResponse {
         Money tipMoney;
         Money serviceChargeMoney;
     }
-
     public Money netAmountDueMoney;
-
     public OrderSource source;
-
     public String state;
-
-    private Money totalDiscountMoney;
-
+    public Money totalDiscountMoney;
     public Money totalMoney;
-
     public Money totalServiceChargeMoney;
-
     public Money totalTaxMoney;
-
     public Money totalTipMoney;
-
     public String updatedAt;
-
     public Integer version;
+
+    public void setModelApiOrderResponse(modelApiOrderResponse r) {
+        this.createdAt = r.getCreatedAt();
+        this.id = r.getId();
+        this.lineItems = r.getLineItems();
+        this.locationId = r.getLocationId();
+        this.netAmounts = r.getNetAmounts();
+        this.netAmountDueMoney = r.getNetAmountDueMoney();
+        this.source = r.getSource();
+        this.state = r.getState();
+        this.totalDiscountMoney = r.getTotalDiscountMoney();
+        this.totalMoney = r.getTotalMoney();
+        this.totalServiceChargeMoney = this.getTotalServiceChargeMoney();
+        this.totalTaxMoney = r.getTotalTaxMoney();
+        this.totalTipMoney = r.getTotalTipMoney();
+        this.updatedAt = r.getUpdatedAt();
+        this.version = r.getVersion();
+
+    }
 
 }

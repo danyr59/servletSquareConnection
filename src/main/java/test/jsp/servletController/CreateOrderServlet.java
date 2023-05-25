@@ -20,7 +20,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.JSONObject;
 import test.jsp.apiRequest.modelApi.modelApiOrder;
+import test.jsp.apiRequest.modelApi.modelApiOrderResponse;
 import test.jsp.apiRequest.orderRequestApi;
 import test.jsp.model.order.Order;
 
@@ -54,14 +56,20 @@ public class CreateOrderServlet extends HttpServlet {
         Order order = null;
         try (PrintWriter out = response.getWriter()) {
             String location_id = request.getParameter("location-id");
-            String idempotency_key = request.getParameter("idempotency-key");
+            String quantity_modifier = request.getParameter("quantity-modifier");
+            String modifier_id = request.getParameter("modifier-id");
             String quantity_product = request.getParameter("quantity-product");
             String catalog_object_id = request.getParameter("catalog-object-id");
-            out.print(location_id + idempotency_key + quantity_product + catalog_object_id + catalog_object_id);
+            //out.print(location_id + idempotency_key + quantity_product + catalog_object_id + catalog_object_id);
             order = new Order();
             order.setOrder("", "", quantity_product, catalog_object_id, location_id);
             orderRequestApi orderApi = new orderRequestApi();
-            orderApi.runPromise(new modelApiOrder("","",quantity_product, catalog_object_id, location_id));
+            modelApiOrderResponse bodyResponse = orderApi.runPromise(new modelApiOrder(modifier_id,quantity_modifier,quantity_product, catalog_object_id, location_id));
+            //System.out.println("en dopost");
+            JSONObject r = new JSONObject(bodyResponse);
+            //System.out.println(r);
+            out.print(r);
+                        
         } catch (InterruptedException ex) {
             System.out.println("Error");
             Logger.getLogger(CreateOrderServlet.class.getName()).log(Level.SEVERE, null, ex);

@@ -38,17 +38,15 @@ public class orderRequestApi {
 
         modelApiOrderResponse orderBody = new modelApiOrderResponse();
 
-        
         Call<modelApiOrderResponse> call = orderClient.postModelApiOrder(order_);
         //synchronous
-        try{
-            Response<modelApiOrderResponse> response =  call.execute();
+        try {
+            Response<modelApiOrderResponse> response = call.execute();
             orderBody.setModelApiOrderResponse(response.body());
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
-        
+
         //asynchronous
         /*
         call.enqueue(new Callback<modelApiOrderResponse>() {
@@ -68,7 +66,7 @@ public class orderRequestApi {
 
             }
         });
-*/
+         */
         return orderBody;
     }
 

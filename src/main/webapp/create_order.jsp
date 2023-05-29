@@ -2,15 +2,17 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html class="w-full h-full">
+<html class="w-full ">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <%@include file="includes/head.jsp" %> 
         <title>Create Order</title>
         <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
         <script src="lodash.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
+
     </head>
-    <body class=" w-full h-full flex items-center justify-center">
+    <body class=" w-full  flex items-center justify-center overflow-auto	">
 
         <form class="w-full max-w-lg" id="form-upload-order" method="post">
             <div class="flex flex-wrap -mx-3 mb-6">
@@ -101,6 +103,43 @@
                     <button id="buttonAddFulfillments" type="button" class="appearance-none block bg-gray-200 text-gray-600 border border-gray-600 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-900">
                         Add fulfillment
                     </button>
+                </div>
+            </div>
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full md:w- px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="source_id">
+                        Source Id
+                    </label>
+                    <input id="source_id" type="text" placeholder="" name="source_id" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" />
+                    
+                </div>
+                <div class="w-full md:w- px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="reference_id">
+                        Reference id
+                    </label>
+                    <input id="reference_id" type="text" placeholder="" name="reference_id" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" />
+                    
+                </div>
+                <div class="w-full md:w- px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="source">
+                        Source
+                    </label>
+                    <input id="source" type="text" placeholder="" name="external_details[source]" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" />
+                    
+                </div>
+                <div class="w-full md:w- px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="type">
+                        Type
+                    </label>
+                    <input id="type" type="text" placeholder="" name="external_details[type]" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" />
+                    
+                </div>
+                <div class="w-full md:w- px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="source_id">
+                        Source Id
+                    </label>
+                    <input id="source_id" type="text" placeholder="" name="external_details[source_id]" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" />
+                    
                 </div>
             </div>
 
@@ -289,7 +328,14 @@
                 divLineItem.className = "w-full px-3 flex flex-wrap block";
                 divLineItem.className = "line-item flex flex-wrap";
 
+                var labelType = document.createElement("label");
+                labelType.className = "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2";
+                labelType.textContent = "Type";
 
+                var inputType = document.createElement("input");
+                inputType.className = "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
+                inputType.name = "fulfillments[" + contadorFulfillments + "][type]";
+                inputType.type = "text";
 
 
                 var labelDisplayName = document.createElement("label");
@@ -412,8 +458,8 @@
                 InputSublocality.className = "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
                 InputSublocality.name = "fulfillments[" + contadorFulfillments + "][shipment_details][recipient][address][sublocality]";
                 InputSublocality.type = "text";
-                
-                
+
+
                 var labelSublocality_2 = document.createElement("label");
                 labelSublocality_2.className = "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2";
                 labelSublocality_2.textContent = "Sublocality 1";
@@ -422,7 +468,7 @@
                 InputSublocality_2.className = "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
                 InputSublocality_2.name = "fulfillments[" + contadorFulfillments + "][shipment_details][recipient][address][sublocality_2]";
                 InputSublocality_2.type = "text";
-                
+
                 var labelSublocality_3 = document.createElement("label");
                 labelSublocality_3.className = "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2";
                 labelSublocality_3.textContent = "Sublocality 2";
@@ -471,8 +517,10 @@
 
 
 
-
+                divLineItem.appendChild(labelType);
+                divLineItem.appendChild(inputType);
                 divLineItem.appendChild(divContainerShipmentDetails);
+
 
 
 
@@ -511,47 +559,7 @@
                 console.log(result);
 
 
-                /*
-                 for (var i = 0; i < campos.length; i++) {
-                 var campo = campos[i];
-                 
-                 if (campo.name !== "") {
-                 var clave = campo.name;
-                 var valor = campo.value;
-                 
-                 if (clave.includes("[")) {
-                 var partes = clave.split("[");
-                 
-                 var nombreObjeto = partes[0];
-                 var indice = partes[1].replace("]", "");
-                 var keyArray = partes[2].replace("]", "");
-                 
-                 
-                 if (nombreObjeto in valores) {
-                 if (Array.isArray(valores[nombreObjeto])) {
-                 valores[nombreObjeto][indice] = valores[nombreObjeto][indice] || {};
-                 valores[nombreObjeto][indice][keyArray] = valor;
-                 } else {
-                 valores[nombreObjeto] = [valores[nombreObjeto][0], {}];
-                 valores[nombreObjeto][indice][keyArray] = valor;
-                 }
-                 } else {
-                 
-                 valores[nombreObjeto] = {};
-                 valores[nombreObjeto][indice] = {};
-                 valores[nombreObjeto][indice][keyArray] = valor;
-                 if(partes.length >3){
-                 console.log(partes[3])
-                 }
-                 }
-                 } else {
-                 
-                 valores[clave] = valor;
-                 }
-                 }
-                 }
-                 
-                 */
+                
 
                 return result;
             }
@@ -559,6 +567,9 @@
             function miFuncionEvento(event) {
                 event.preventDefault();
                 var valoresFormulario = obtenerValoresFormulario();
+                axios.post("create-order", valoresFormulario).then(function (response) {
+                    console.log(response);
+                });
                 console.log(valoresFormulario);
                 // Realizar acciones adicionales con los valores del formulario
             }

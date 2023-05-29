@@ -14,6 +14,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 //modelo para la respuesta
 import com.squareup.square.models.Order;
+import lombok.NonNull;
 
 import test.jsp.apiRequest.modelApi.modelApiOrderResponse;
 
@@ -32,13 +33,13 @@ public class orderRequestApi {
                 .build();
     }
 
-    public modelApiOrderResponse runPromise(modelApiOrder order) throws InterruptedException {
+    public modelApiOrderResponse runPromise(@NonNull modelApiOrder order) throws InterruptedException {
         ClientApiOrder orderClient = this.retrofit.create(ClientApiOrder.class);
-        modelApiOrder order_ = new modelApiOrder(order.getModifierId(), order.getQuantityModifier(), order.getQuantityOrder(), order.getItemVariationId(), order.getLocation());
+        //modelApiOrder order_ = new modelApiOrder(order);
 
         modelApiOrderResponse orderBody = new modelApiOrderResponse();
 
-        Call<modelApiOrderResponse> call = orderClient.postModelApiOrder(order_);
+        Call<modelApiOrderResponse> call = orderClient.postModelApiOrder(order);
         //synchronous
         try {
             Response<modelApiOrderResponse> response = call.execute();

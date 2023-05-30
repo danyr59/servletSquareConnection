@@ -49,74 +49,40 @@ public class CreateOrderServlet extends HttpServlet {
 
         response.sendRedirect("create_order.jsp");
 
-        /*
-        PrintWriter out = response.getWriter();
-        out.println("<html><body>");
-        out.println("<h1>" + message + "</h1>");
-        out.println("</body></html>");
-         */
     }
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        modelApiOrder order = null;
 
 //        System.out.println(location_id + " " + quantity_modifier + " " + modifier_id + " " + quantity_product + " " + catalog_object_id);
         JSONObject jsonb = null;
-        try (PrintWriter out = response.getWriter(); BufferedReader reader = request.getReader()) {
+
+        try (PrintWriter out = response.getWriter(); BufferedReader reader = request.getReader()){
 
             jsonb = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
-            
-            modelApiOrder order = null;
+
             order = this.inicializarObj(jsonb);
-            System.out.println(order);
-            out.print(order);
-        }
 
-
-        /*
-        try (PrintWriter out = response.getWriter()) {
-            String location_id = request.getParameter("location-id");
-            String quantity_modifier = request.getParameter("quantity-modifier");
-            String modifier_id = request.getParameter("modifier-id");
-            String quantity_product = request.getParameter("quantity-product");
-            String catalog_object_id = request.getParameter("catalog-object-id");
-            //out.print(location_id + idempotency_key + quantity_product + catalog_object_id + catalog_object_id);
-            
             orderRequestApi orderApi = new orderRequestApi();
-            modelApiOrderResponse bodyResponse = orderApi.runPromise(new modelApiOrder(modifier_id,quantity_modifier,quantity_product, catalog_object_id, location_id));
+            modelApiOrderResponse bodyResponse = orderApi.runPromise(order);
             //System.out.println("en dopost");
-            JSONObject r = new JSONObject(bodyResponse);
-            //System.out.println(r);
-            out.print(r);
-                        
+            //JSONObject r = new JSONObject(bodyResponse);
+            JSONObject respuesta = new JSONObject();
+            respuesta.put("title", bodyResponse.getTitle());
+            respuesta.put("mensaje", "creado con exito");
+            respuesta.put("order_id", bodyResponse.getOrderId());
+            response.setContentType("application/json");
+            
+            out.print(respuesta.toString());
+
+            //out.print(order);
         } catch (InterruptedException ex) {
-            System.out.println("Error");
             Logger.getLogger(CreateOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-         */
- /*
-        try (PrintWriter out = response.getWriter()) {
-        String location_id = request.getParameter("location-id");
-        String quantity_modifier = request.getParameter("quantity-modifier");
-        String modifier_id = request.getParameter("modifier-id");
-        String quantity_product = request.getParameter("quantity-product");
-        String catalog_object_id = request.getParameter("catalog-object-id");
-        //out.print(location_id + idempotency_key + quantity_product + catalog_object_id + catalog_object_id);
-        order = new Order();
-        order.setOrder("", "", quantity_product, catalog_object_id, location_id);
-        orderRequestApi orderApi = new orderRequestApi();
-        modelApiOrderResponse bodyResponse = orderApi.runPromise(new modelApiOrder(modifier_id,quantity_modifier,quantity_product, catalog_object_id, location_id));
-        //System.out.println("en dopost");
-        JSONObject r = new JSONObject(bodyResponse);
-        //System.out.println(r);
-        out.print(r);
-        } catch (InterruptedException ex) {
-        System.out.println("Error");
-        Logger.getLogger(CreateOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-         */
+        // request.setAttribute("mensaje", "ha sido creado");
+        //request.getRequestDispatcher("RegistroExitoso.jsp").forward(request, response);
     }
 
     public modelApiOrder inicializarObj(JSONObject jsonb) {
@@ -134,14 +100,14 @@ public class CreateOrderServlet extends HttpServlet {
         for (int i = 0; i < jsonb.getJSONArray("line_items").length(); i++) {
             JSONObject line_items = jsonb.getJSONArray("line_items").getJSONObject(i);
             JSONArray modi = line_items.getJSONArray("modifiers");
-            
+
             for (int j = 0; j < modi.length(); j++) {
 
                 JSONObject modiObj = modi.getJSONObject(j);
-                
+
                 String catalog_object_id = modiObj.getString("catalog_object_id");
                 String quantity = modiObj.getString("quantity");
-                
+
                 m.setCatalog_object_id(catalog_object_id);
                 m.setQuantity(quantity);
 
@@ -228,10 +194,10 @@ public class CreateOrderServlet extends HttpServlet {
             f.add(f_);
 
         }
-        
+
         //order 
         String reference_id = jsonb.getString("reference_id");
-        String source_id =  jsonb.getString("source_id");
+        String source_id = jsonb.getString("source_id");
         JSONObject external_deta = jsonb.getJSONObject("external_details");
         String source = external_deta.getString("source");
         String type = external_deta.getString("type");
@@ -240,9 +206,7 @@ public class CreateOrderServlet extends HttpServlet {
         e.setSource(source);
         e.setType(type);
         e.setSourceId(source_id_external);
-        
-        
-        
+
         modelApiOrder.Order o = new modelApiOrder.Order();
         o.setLine_items(aux_list_items);
         o.setCustomer_id(customer_id);
@@ -254,19 +218,16 @@ public class CreateOrderServlet extends HttpServlet {
         o.setSource_id(source_id);
         o.setReference_id(reference_id);
         o.setExternal_details(e);
-        
-        
-         
-       
+
         order.setOrder(o);
-        
+
         return order;
 
     }
 
     @Override
     public void destroy() {
-        
+
     }
 }
 /*

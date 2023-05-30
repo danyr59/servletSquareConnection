@@ -40,52 +40,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class modelApiOrderResponse {
-
-    public String createdAt;
-    public String id;
-    public List<OrderLineItem> lineItems;
-    public String locationId;
-    public OrderMoneyAmounts netAmounts;
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public class OrderMoneyAmounts {
-
-        Money totalMoney;
-        Money taxMoney;
-        Money discountMoney;
-        Money tipMoney;
-        Money serviceChargeMoney;
-    }
-    public Money netAmountDueMoney;
-    public OrderSource source;
-    public String state;
-    public Money totalDiscountMoney;
-    public Money totalMoney;
-    public Money totalServiceChargeMoney;
-    public Money totalTaxMoney;
-    public Money totalTipMoney;
-    public String updatedAt;
-    public Integer version;
-
-    public void setModelApiOrderResponse(modelApiOrderResponse r) {
-        this.createdAt = r.getCreatedAt();
-        this.id = r.getId();
-        this.lineItems = r.getLineItems();
-        this.locationId = r.getLocationId();
-        this.netAmounts = r.getNetAmounts();
-        this.netAmountDueMoney = r.getNetAmountDueMoney();
-        this.source = r.getSource();
-        this.state = r.getState();
-        this.totalDiscountMoney = r.getTotalDiscountMoney();
-        this.totalMoney = r.getTotalMoney();
-        this.totalServiceChargeMoney = this.getTotalServiceChargeMoney();
-        this.totalTaxMoney = r.getTotalTaxMoney();
-        this.totalTipMoney = r.getTotalTipMoney();
-        this.updatedAt = r.getUpdatedAt();
-        this.version = r.getVersion();
-
-    }
+    String orderId;
+    String title;
+    
 
 }

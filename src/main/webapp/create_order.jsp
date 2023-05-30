@@ -111,35 +111,35 @@
                         Source Id
                     </label>
                     <input id="source_id" type="text" placeholder="" name="source_id" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" />
-                    
+
                 </div>
                 <div class="w-full md:w- px-3 mb-6 md:mb-0">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="reference_id">
                         Reference id
                     </label>
                     <input id="reference_id" type="text" placeholder="" name="reference_id" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" />
-                    
+
                 </div>
                 <div class="w-full md:w- px-3 mb-6 md:mb-0">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="source">
                         Source
                     </label>
                     <input id="source" type="text" placeholder="" name="external_details[source]" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" />
-                    
+
                 </div>
                 <div class="w-full md:w- px-3 mb-6 md:mb-0">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="type">
                         Type
                     </label>
                     <input id="type" type="text" placeholder="" name="external_details[type]" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" />
-                    
+
                 </div>
                 <div class="w-full md:w- px-3 mb-6 md:mb-0">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="source_id">
                         Source Id
                     </label>
                     <input id="source_id" type="text" placeholder="" name="external_details[source_id]" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" />
-                    
+
                 </div>
             </div>
 
@@ -559,7 +559,7 @@
                 console.log(result);
 
 
-                
+
 
                 return result;
             }
@@ -568,7 +568,13 @@
                 event.preventDefault();
                 var valoresFormulario = obtenerValoresFormulario();
                 axios.post("create-order", valoresFormulario).then(function (response) {
-                    console.log(response);
+                    const {title, mensaje, order_id} = response.data;
+                    console.log(title, mensaje, order_id)
+                    window.location.href = "RegistroExitoso.jsp?mensaje="+ mensaje+"&title=" +title+"&order_id=" +order_id;
+
+                }).catch(error => {
+                    // Manejar errores de la solicitud
+                    console.error(error);
                 });
                 console.log(valoresFormulario);
                 // Realizar acciones adicionales con los valores del formulario

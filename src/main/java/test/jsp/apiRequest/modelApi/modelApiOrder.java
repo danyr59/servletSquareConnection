@@ -36,6 +36,7 @@ public class modelApiOrder {
         String source_id;
         String reference_id;
         ExternalPaymentDetails external_details;
+        String order_id;
 
     }
 

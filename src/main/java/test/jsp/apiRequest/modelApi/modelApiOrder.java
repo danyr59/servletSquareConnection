@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -120,11 +121,12 @@ public class modelApiOrder {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
+    //@Builder
     public static class ExternalPaymentDetails {
-
+        //@Builder.Default
         String type;
         String source;
-        String sourceId;
+        String sourceId ;
         //private Money sourceFeeMoney;
     }
 

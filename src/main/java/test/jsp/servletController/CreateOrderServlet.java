@@ -32,6 +32,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 import jdk.nashorn.api.scripting.JSObject;
 import org.json.JSONArray;
+// Definición de la función lambda
+
+// Interfaz funcional para la función lambda
+@FunctionalInterface
+interface FuncionVerificar {
+
+    String operar(String key, JSONObject obj);
+}
 
 @WebServlet(name = "create-order", value = "/create-order")
 public class CreateOrderServlet extends HttpServlet {
@@ -53,13 +61,13 @@ public class CreateOrderServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json");
         modelApiOrder order = null;
 
 //        System.out.println(location_id + " " + quantity_modifier + " " + modifier_id + " " + quantity_product + " " + catalog_object_id);
         JSONObject jsonb = null;
 
-        try (PrintWriter out = response.getWriter(); BufferedReader reader = request.getReader()){
+        try (PrintWriter out = response.getWriter(); BufferedReader reader = request.getReader()) {
 
             jsonb = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
 
@@ -73,8 +81,7 @@ public class CreateOrderServlet extends HttpServlet {
             respuesta.put("title", bodyResponse.getTitle());
             respuesta.put("mensaje", "creado con exito");
             respuesta.put("order_id", bodyResponse.getOrderId());
-            response.setContentType("application/json");
-            
+
             out.print(respuesta.toString());
 
             //out.print(order);
@@ -86,7 +93,12 @@ public class CreateOrderServlet extends HttpServlet {
     }
 
     public modelApiOrder inicializarObj(JSONObject jsonb) {
+        FuncionVerificar check = (key, obj) -> obj.has(key) ? obj.getString(key) : "";
+
+        // Llamada a la función lambda
+        //String resultado = check.operar("2"); // resultado será 5
         modelApiOrder order = new modelApiOrder();
+
         List<modelApiOrder.Modifiers> aux_modifier = new ArrayList<>();
         modelApiOrder.Modifiers m = new modelApiOrder.Modifiers();
         modelApiOrder.lineItems li = new modelApiOrder.lineItems();
@@ -97,44 +109,52 @@ public class CreateOrderServlet extends HttpServlet {
         String customer_id = jsonb.getString("customer_id");
         String ticket_name = jsonb.getString("ticket_name");
         List<modelApiOrder.lineItems> aux_list_items = new ArrayList<>();
-        for (int i = 0; i < jsonb.getJSONArray("line_items").length(); i++) {
-            JSONObject line_items = jsonb.getJSONArray("line_items").getJSONObject(i);
-            JSONArray modi = line_items.getJSONArray("modifiers");
+        if (jsonb.has("line_items")) {
+            for (int i = 0; i < jsonb.getJSONArray("line_items").length(); i++) {
+                JSONObject line_items = jsonb.getJSONArray("line_items").getJSONObject(i);
+                
+                if (line_items.has("modifiers")) {
+                    JSONArray modi = line_items.getJSONArray("modifiers");
 
-            for (int j = 0; j < modi.length(); j++) {
+                    for (int j = 0; j < modi.length(); j++) {
 
-                JSONObject modiObj = modi.getJSONObject(j);
+                        JSONObject modiObj = modi.getJSONObject(j);
 
-                String catalog_object_id = modiObj.getString("catalog_object_id");
-                String quantity = modiObj.getString("quantity");
+                        String catalog_object_id = modiObj.getString("catalog_object_id");
+                        String quantity = modiObj.getString("quantity");
 
-                m.setCatalog_object_id(catalog_object_id);
-                m.setQuantity(quantity);
+                        m.setCatalog_object_id(catalog_object_id);
+                        m.setQuantity(quantity);
 
-                aux_modifier.add(m);
+                        aux_modifier.add(m);
+                    }
+                    
+                }
+                String quantity = line_items.getString("quantity");
+                String catalog_object_id = line_items.getString("catalog_object_id");
+                String item_type = line_items.getString("item_type");
+
+                li.setCatalog_object_id(catalog_object_id);
+                li.setQuantity(quantity);
+                li.setItem_type(item_type);
+                li.setModifiers(aux_modifier);
+                aux_list_items.add(li);
+
             }
-            String quantity = line_items.getString("quantity");
-            String catalog_object_id = line_items.getString("catalog_object_id");
-            String item_type = line_items.getString("item_type");
-
-            li.setCatalog_object_id(catalog_object_id);
-            li.setQuantity(quantity);
-            li.setItem_type(item_type);
-            li.setModifiers(aux_modifier);
-            aux_list_items.add(li);
-
         }
 
-        JSONArray taxesArray = jsonb.getJSONArray("taxes");
-        for (int i = 0; i < jsonb.getJSONArray("taxes").length(); i++) {
-            modelApiOrder.Taxes t = new modelApiOrder.Taxes();
-            JSONObject objTaxes = taxesArray.getJSONObject(i);
-            String catalog_object_id = objTaxes.getString("catalog_object_id");
-            String catalog_version = objTaxes.getString("catalog_version");
+        if (jsonb.has("taxes")) {
+            JSONArray taxesArray = jsonb.getJSONArray("taxes");
+            for (int i = 0; i < jsonb.getJSONArray("taxes").length(); i++) {
+                modelApiOrder.Taxes t = new modelApiOrder.Taxes();
+                JSONObject objTaxes = taxesArray.getJSONObject(i);
+                String catalog_object_id = objTaxes.getString("catalog_object_id");
+                String catalog_version = objTaxes.getString("catalog_version");
 
-            t.setCatalog_object_id(catalog_object_id);
-            t.setCatalog_version(catalog_version);
-            taxes.add(t);
+                t.setCatalog_object_id(catalog_object_id);
+                t.setCatalog_version(catalog_version);
+                taxes.add(t);
+            }
         }
 
         //set part of fulfillment - update
@@ -230,31 +250,3 @@ public class CreateOrderServlet extends HttpServlet {
 
     }
 }
-/*
-            String location_id = request.getParameter("location-id");
-            String quantity_modifier = request.getParameter("quantity-modifier");
-            String modifier_id = request.getParameter("modifier-id");
-            String quantity_product = request.getParameter("quantity-product");
-            String catalog_object_id = request.getParameter("catalog-object-id");
-            order = new Order();
-
-            order.setLocation(location_id);
-            order.setQuantityOrder(quantity_product);
-            order.setModifierId(modifier_id);
-            order.setQuantityModifier(quantity_modifier);
-            order.setItemVariationId(catalog_object_id);
-
- */
-//String orderJson = jsonb.toJson(order);
-//System.out.println(reader.lines().collect(Collectors.joining(System.lineSeparator())));
-//String a = reader.lines().collect(Collectors.joining(System.lineSeparator()));
-// for (JSONObject object : jsonb.getJSONArray("line_items")){
-
-//}
-/*jsonb.getJSONArray("line_items").forEach(object -> {
-                System.out.println(object);
-                JSONArray a = new JSONObject(object).getJSONArray("modifiers");
-                System.out.println(a);
-
-            });
- */

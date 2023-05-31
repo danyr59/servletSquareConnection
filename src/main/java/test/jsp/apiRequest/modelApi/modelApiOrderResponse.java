@@ -40,8 +40,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class modelApiOrderResponse {
+
     String orderId;
     String title;
-    
+    private List<com.squareup.square.models.Error> errors;
 
 }

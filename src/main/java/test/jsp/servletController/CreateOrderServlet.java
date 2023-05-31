@@ -34,14 +34,7 @@ import jdk.nashorn.api.scripting.JSObject;
 import org.json.JSONArray;
 // Definición de la función lambda
 
-// Interfaz funcional para la función lambda
-@FunctionalInterface
-interface FuncionVerificar {
-
-    String operar(String key, JSONObject obj);
-}
-
-@WebServlet(name = "create-order", value = "/create-order")
+@WebServlet(name = "create-order", urlPatterns = "/create-order")
 public class CreateOrderServlet extends HttpServlet {
 
     private String message;
@@ -67,6 +60,7 @@ public class CreateOrderServlet extends HttpServlet {
 //        System.out.println(location_id + " " + quantity_modifier + " " + modifier_id + " " + quantity_product + " " + catalog_object_id);
         JSONObject jsonb = null;
 
+        
         try (PrintWriter out = response.getWriter(); BufferedReader reader = request.getReader()) {
 
             jsonb = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
@@ -88,12 +82,13 @@ public class CreateOrderServlet extends HttpServlet {
         } catch (InterruptedException ex) {
             Logger.getLogger(CreateOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         // request.setAttribute("mensaje", "ha sido creado");
         //request.getRequestDispatcher("RegistroExitoso.jsp").forward(request, response);
     }
 
     public modelApiOrder inicializarObj(JSONObject jsonb) {
-        FuncionVerificar check = (key, obj) -> obj.has(key) ? obj.getString(key) : "";
+        //FuncionVerificar check = (key, obj) -> obj.has(key) ? obj.getString(key) : "";
 
         // Llamada a la función lambda
         //String resultado = check.operar("2"); // resultado será 5
@@ -112,7 +107,7 @@ public class CreateOrderServlet extends HttpServlet {
         if (jsonb.has("line_items")) {
             for (int i = 0; i < jsonb.getJSONArray("line_items").length(); i++) {
                 JSONObject line_items = jsonb.getJSONArray("line_items").getJSONObject(i);
-                
+
                 if (line_items.has("modifiers")) {
                     JSONArray modi = line_items.getJSONArray("modifiers");
 
@@ -128,7 +123,7 @@ public class CreateOrderServlet extends HttpServlet {
 
                         aux_modifier.add(m);
                     }
-                    
+
                 }
                 String quantity = line_items.getString("quantity");
                 String catalog_object_id = line_items.getString("catalog_object_id");

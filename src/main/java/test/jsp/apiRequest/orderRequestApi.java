@@ -1,25 +1,20 @@
 package test.jsp.apiRequest;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
-import test.jsp.apiRequest.modelApi.modelApiOrder;
+import test.jsp.apiRequest.modelApiRequestResponse.modelApiOrderRequest;
 import test.jsp.apiRequest.modelApiClient.ClientApiOrder;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 //modelo para la respuesta
-import com.squareup.square.models.Order;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.NonNull;
-import retrofit2.http.Body;
 
-import test.jsp.apiRequest.modelApi.modelApiOrderResponse;
+import test.jsp.apiRequest.modelApiRequestResponse.modelApiOrderResponse;
 import test.jsp.apiRequest.modelApiClient.clientApiOrderUpdate;
 import test.jsp.apiRequest.modelApiClient.clientApiPayment;
 
@@ -38,9 +33,9 @@ public class orderRequestApi {
                 .build();
     }
 
-    public modelApiOrderResponse runPromise(modelApiOrder order) throws InterruptedException {
+    public modelApiOrderResponse runCallAllApis(modelApiOrderRequest order) throws InterruptedException {
         ClientApiOrder orderClient = this.retrofit.create(ClientApiOrder.class);
-        //modelApiOrder order_ = new modelApiOrder(order);
+        
 
         modelApiOrderResponse orderBody = new modelApiOrderResponse();
 
@@ -53,10 +48,18 @@ public class orderRequestApi {
             Response<modelApiOrderResponse> response = call.execute();
             orderBody.setOrderId(response.body().getOrderId());
             orderBody.setTitle(response.body().getTitle());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+            orderBody.setErrors(response.body().getErrors());
 
+            if (response.body().getErrors() != null) {
+                throw new RuntimeException(response.body().getErrors().toString());
+            }
+        } catch (IOException | RuntimeException e) {
+
+            Logger.getLogger(orderRequestApi.class.getName()).log(Level.SEVERE, e.getMessage(), e);
+            return orderBody;
+
+        }
+        
         //update order
         if (!orderBody.getTitle().equals("SUCCESS")) {
             throw new RuntimeException("Error en crear orden");
@@ -75,19 +78,23 @@ public class orderRequestApi {
             Response<modelApiOrderResponse> response = callUpdate.execute();
             orderBody.setOrderId(response.body().getOrderId());
             orderBody.setTitle(response.body().getTitle());
+            orderBody.setErrors(response.body().getErrors());
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            if (response.body().getErrors() != null) {
+                throw new RuntimeException(response.body().getErrors().toString());
+            }
 
-        if (!orderBody.getTitle().equals("SUCCESS")) {
-            throw new RuntimeException("Error al actualizar orden");
+        } catch (IOException | RuntimeException e) {
+
+            Logger.getLogger(orderRequestApi.class.getName()).log(Level.SEVERE, e.getMessage(), e);
+            return orderBody;
+
         }
 
         clientApiPayment orderClientPayment = this.retrofit.create(clientApiPayment.class);
         //payment
 
-        modelApiOrder.Order o = new modelApiOrder.Order();
+        modelApiOrderRequest.Order o = new modelApiOrderRequest.Order();
         o.setLine_items(order.getOrder().getLine_items());
         o.setCustomer_id(order.getOrder().getCustomer_id());
         o.setLocation_id(order.getOrder().getLocation_id());
@@ -105,11 +112,18 @@ public class orderRequestApi {
         try {
             Response<modelApiOrderResponse> response = callPayment.execute();
             orderBody.setTitle(response.body().getTitle());
+            orderBody.setErrors(response.body().getErrors());
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            if (response.body().getErrors() != null) {
+                throw new RuntimeException(response.body().getErrors().toString());
+            }
+
+        } catch (IOException | RuntimeException e) {
+
+            Logger.getLogger(orderRequestApi.class.getName()).log(Level.SEVERE, e.getMessage(), e);
+            return orderBody;
+
         }
-
         return orderBody;
     }
 

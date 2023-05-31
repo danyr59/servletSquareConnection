@@ -21,7 +21,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 
 @WebServlet(name = "helloServlet", value = "/hello-servlet")
@@ -39,12 +38,7 @@ public class HelloServlet extends HttpServlet {
 
         response.sendRedirect("another.jsp");
         
-        /*
-        PrintWriter out = response.getWriter();
-        out.println("<html><body>");
-        out.println("<h1>" + message + "</h1>");
-        out.println("</body></html>");
-*/
+
     }
 
     @Override

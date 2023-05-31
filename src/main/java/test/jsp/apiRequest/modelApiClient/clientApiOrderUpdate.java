@@ -11,8 +11,8 @@ import retrofit2.http.Headers;
 
 import retrofit2.http.PUT;
 import retrofit2.http.QueryMap;
-import test.jsp.apiRequest.modelApi.modelApiOrder;
-import test.jsp.apiRequest.modelApi.modelApiOrderResponse;
+import test.jsp.apiRequest.modelApiRequestResponse.modelApiOrderRequest;
+import test.jsp.apiRequest.modelApiRequestResponse.modelApiOrderResponse;
 
 /**
  *
@@ -22,6 +22,6 @@ public interface clientApiOrderUpdate {
     @Headers("Content-type: application/json")
     @PUT("integrationSquarePOS/api/v1/orders")
 
-    Call<modelApiOrderResponse> postModelApiOrder(@QueryMap Map<String, String> params, @Body modelApiOrder order);
+    Call<modelApiOrderResponse> postModelApiOrder(@QueryMap Map<String, String> params, @Body modelApiOrderRequest order);
 
 }

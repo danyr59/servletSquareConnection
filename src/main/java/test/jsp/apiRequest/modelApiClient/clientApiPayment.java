@@ -9,10 +9,9 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
 
-import test.jsp.apiRequest.modelApi.modelApiOrder;
-import test.jsp.apiRequest.modelApi.modelApiOrderResponse;
+import test.jsp.apiRequest.modelApiRequestResponse.modelApiOrderRequest;
+import test.jsp.apiRequest.modelApiRequestResponse.modelApiOrderResponse;
 
 /**
  *
@@ -22,6 +21,6 @@ public interface clientApiPayment {
 
     @Headers("Content-type: application/json")
     @POST("integrationSquarePOS/api/v1/payment")
-    Call<modelApiOrderResponse> postModelApiPayment(@Body modelApiOrder.Order order);
+    Call<modelApiOrderResponse> postModelApiPayment(@Body modelApiOrderRequest.Order order);
 
 }

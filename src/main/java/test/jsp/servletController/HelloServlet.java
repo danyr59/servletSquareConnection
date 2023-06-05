@@ -21,6 +21,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import test.jsp.apiRequest.catalogRequestApi;
 
 
 @WebServlet(name = "helloServlet", value = "/hello-servlet")
@@ -35,9 +38,14 @@ public class HelloServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //response.setContentType("text/html");
-
+        catalogRequestApi f = new catalogRequestApi();
+        try {
+            f.runCallgetCatalog();
+            //response.sendRedirect("another.jsp");
+        } catch (InterruptedException ex) {
+            Logger.getLogger(HelloServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
         response.sendRedirect("another.jsp");
-        
 
     }
 

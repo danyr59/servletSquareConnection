@@ -17,7 +17,9 @@ import test.jsp.apiRequest.modelApiRequestResponse.modelApiOrderRequest;
  */
 @Named
 public class Utils {
+
     
+
     public modelApiOrderRequest inicializarObj(JSONObject jsonb) {
         //FuncionVerificar check = (key, obj) -> obj.has(key) ? obj.getString(key) : "";
 
@@ -170,5 +172,5 @@ public class Utils {
         return order;
 
     }
-    
+
 }

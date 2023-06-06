@@ -72,31 +72,7 @@ myObjects = null;
                             <th class="border px-4 py-2">Categoría</th>
                             <th class="border px-4 py-2">Precio</th>
                             <th class="border px-4 py-2">Impuesto</th>
-                                <%--
-
-                            <th class="border px-4 py-2">Para vender</th>
-                            <th class="border px-4 py-2">Para almacenar en stock</th>
-                            <th class="border px-4 py-2">Opción de nombre 1</th>
-                            <th class="border px-4 py-2">Valor de la opción 1</th>
-                            <th class="border px-4 py-2">Opción de nombre 2</th>
-                            <th class="border px-4 py-2">Valor de la opción 2</th>
-                            <th class="border px-4 py-2">Opción de nombre 3</th>
-                            <th class="border px-4 py-2">Valor de la opción 3</th>
-                                
-                            <th class="border px-4 py-2">Activado My Business</th>
-                            <th class="border px-4 py-2">Cantidad actual My Business</th>
-                            <th class="border px-4 py-2">Nueva cantidad My Business</th>
-                            <th class="border px-4 py-2">Alerta de inventario activada My Business</th>
-                            <th class="border px-4 py-2">Conteo de alerta de inventario My Business</th>
-                            <th class="border px-4 py-2">Precio My Business</th>
-                            <th class="border px-4 py-2">Activado my bussines ny</th>
-                            <th class="border px-4 py-2">Cantidad actual my bussines ny</th>
-                            <th class="border px-4 py-2">Nueva cantidad my bussines ny</th>
-                            <th class="border px-4 py-2">Alerta de inventario activada my bussines ny</th>
-                            <th class="border px-4 py-2">Conteo de alerta de inventario my bussines ny</th>
-                            <th class="border px-4 py-2">Precio my bussines ny</th>
-                            <th class="border px-4 py-2">Impuesto - IVA (19%)</th>
-                                --%>
+                               
                             <th class="border px-4 py-2">Seleccionar</th>
                         </tr>
                     </thead>
@@ -153,29 +129,7 @@ myObjects = null;
                             <td class="border px-4 py-2"><%= nameCategory  %></td>
                             <td class="border px-4 py-2"><%= precio.floatValue() %></td>
                             <td class="border px-4 py-2"><%= nameTaxes %></td>
-                            <%-- <td class="border px-4 py-2">Valor Para vender</td> --%>
-                            <%-- <td class="border px-4 py-2">Valor Para almacenar en stock</td> --%>
-                            <%--
-                            <td class="border px-4 py-2">Valor Opción de nombre 1</td>
-                            <td class="border px-4 py-2">Valor Valor de la opción 1</td>
-                            <td class="border px-4 py-2">Valor Opción de nombre 2</td>
-                            <td class="border px-4 py-2">Valor Valor de la opción 2</td>
-                            <td class="border px-4 py-2">Valor Opción de nombre 3</td>
-                            <td class="border px-4 py-2">Valor Valor de la opción 3</td>
                             
-                            <td class="border px-4 py-2">Valor Activado My Business</td>
-                            <td class="border px-4 py-2">Valor Cantidad actual My Business</td>
-                            <td class="border px-4 py-2">Valor Nueva cantidad My Business</td>
-                            <td class="border px-4 py-2">Valor Alerta de inventario activada My Business</td>
-                            <td class="border px-4 py-2">Valor Conteo de alerta de inventario My Business</td>
-                            <td class="border px-4 py-2">Valor Precio My Business</td>
-                            <td class="border px-4 py-2">Valor Activado my bussines ny</td>
-                            <td class="border px-4 py-2">Valor Cantidad actual my bussines ny</td>
-                            <td class="border px-4 py-2">Valor Nueva cantidad my bussines ny</td>
-                            <td class="border px-4 py-2">Valor Alerta de inventario activada my bussines ny</td>
-                            <td class="border px-4 py-2">Valor Conteo de alerta de inventario my bussines ny</td>
-                            <td class="border px-4 py-2">Valor Precio my bussines ny</td>
-                            --%>
                             <td class="border px-4 py-2 center"><input type="checkbox" name="selectedItem" value="1"></td>
                         </tr>
                         <% } %>

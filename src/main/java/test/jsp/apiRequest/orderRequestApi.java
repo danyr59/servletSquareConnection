@@ -35,14 +35,15 @@ public class orderRequestApi {
     
     
 
-    public modelApiOrderResponse runCallAllApis(modelApiOrderRequest order) throws InterruptedException {
+    public modelApiOrderResponse runCallAllApis(modelApiOrderRequest order, String token) throws InterruptedException {
+        
         ClientApiOrder orderClient = this.retrofit.create(ClientApiOrder.class);
         
 
         modelApiOrderResponse orderBody = new modelApiOrderResponse();
 
         //creation of order
-        Call<modelApiOrderResponse> call = orderClient.postModelApiOrder(order);
+        Call<modelApiOrderResponse> call = orderClient.postModelApiOrder(order, token);
 
         //synchronous
         try {
@@ -74,7 +75,8 @@ public class orderRequestApi {
         var locationId = order.getOrder().getLocation_id();
         params.put("order_id", orderBody.getOrderId());
         params.put("location_id", locationId);
-        Call<modelApiOrderResponse> callUpdate = orderClientUpdate.postModelApiOrder(params, order);
+        
+        Call<modelApiOrderResponse> callUpdate = orderClientUpdate.postModelApiOrder(params, order, token );
 
         try {
             Response<modelApiOrderResponse> response = callUpdate.execute();
@@ -109,7 +111,7 @@ public class orderRequestApi {
         o.setExternal_details(order.getOrder().getExternal_details());
         o.setOrder_id(orderBody.getOrderId());
 
-        Call<modelApiOrderResponse> callPayment = orderClientPayment.postModelApiPayment(o);
+        Call<modelApiOrderResponse> callPayment = orderClientPayment.postModelApiPayment(o, token);
 
         try {
             Response<modelApiOrderResponse> response = callPayment.execute();

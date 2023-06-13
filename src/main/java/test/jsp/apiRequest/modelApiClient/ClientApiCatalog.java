@@ -10,6 +10,7 @@ import retrofit2.Call;
 //import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 //import test.jsp.apiRequest.modelApiRequestResponse.modelApiOrderRequest;
 //import test.jsp.apiRequest.modelApiRequestResponse.modelApiOrderResponse;
 
@@ -20,5 +21,5 @@ import retrofit2.http.GET;
 public interface ClientApiCatalog {
     
     @GET("integrationSquarePOS/api/v1/items")
-    Call<List<CatalogObject>> getCatalogApi();
+    Call<List<CatalogObject>> getCatalogApi(@Header("Authorization") String token);
 }

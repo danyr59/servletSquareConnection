@@ -34,12 +34,12 @@ public class catalogRequestApi {
                 .build();
     }
 
-    public List<CatalogObject> runCallgetCatalog() throws InterruptedException {
+    public List<CatalogObject> runCallgetCatalog(String token) throws InterruptedException {
         ClientApiCatalog orderClient = this.retrofit.create(ClientApiCatalog.class);
-
+        
 //        CatalogObject orderBody = new CatalogObject();
         //creation of order
-        Call<List<CatalogObject>> call = orderClient.getCatalogApi();
+        Call<List<CatalogObject>> call = orderClient.getCatalogApi(token);
         Response<List<CatalogObject>> catalogResponse = null;
         try {
             catalogResponse =  call.execute();

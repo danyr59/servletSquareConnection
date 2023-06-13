@@ -7,6 +7,7 @@ package test.jsp.apiRequest.modelApiClient;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
@@ -21,6 +22,6 @@ public interface clientApiPayment {
 
     @Headers("Content-type: application/json")
     @POST("integrationSquarePOS/api/v1/payment")
-    Call<modelApiOrderResponse> postModelApiPayment(@Body modelApiOrderRequest.Order order);
+    Call<modelApiOrderResponse> postModelApiPayment(@Body modelApiOrderRequest.Order order, @Header("Authorization") String token);
 
 }

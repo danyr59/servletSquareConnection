@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import org.json.JSONObject;
 import jakarta.inject.Inject;
 import java.util.List;
 import test.jsp.apiRequest.catalogRequestApi;
@@ -40,14 +39,14 @@ public class CatalogServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, InterruptedException {
-
+        String token = "EAAAEL_ZvkgzVT9QC59YZA718G1UPSd-GYaiGlJ5b5oA3OJokpgh-7QI8JEvyGcL";
         //get the object
-        List<CatalogObject> catalogo =  client.runCallgetCatalog();
-        catalogo.get(0).getType();
+        List<CatalogObject> catalogo = client.runCallgetCatalog(token);
+        //catalogo.get(0).getType();
         // Crear un objeto JSON
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonString = objectMapper.writeValueAsString(catalogo);
-       
+
         System.out.println(jsonString);
         // Guardar la cadena en el atributo de solicitud
         request.setAttribute("catalogo", jsonString);

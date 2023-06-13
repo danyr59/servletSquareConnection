@@ -37,15 +37,11 @@ public class HelloServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //response.setContentType("text/html");
-        catalogRequestApi f = new catalogRequestApi();
-        try {
-            f.runCallgetCatalog();
-            //response.sendRedirect("another.jsp");
-        } catch (InterruptedException ex) {
-            Logger.getLogger(HelloServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        response.sendRedirect("another.jsp");
+//response.setContentType("text/html");
+        //catalogRequestApi f = new catalogRequestApi();
+        //  f.runCallgetCatalog();
+        //response.sendRedirect("another.jsp");
+                response.sendRedirect("another.jsp");
 
     }
 

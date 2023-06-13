@@ -7,6 +7,7 @@ package test.jsp.apiRequest.modelApiClient;
 import java.util.Map;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 
 import retrofit2.http.PUT;
@@ -22,6 +23,6 @@ public interface clientApiOrderUpdate {
     @Headers("Content-type: application/json")
     @PUT("integrationSquarePOS/api/v1/orders")
 
-    Call<modelApiOrderResponse> postModelApiOrder(@QueryMap Map<String, String> params, @Body modelApiOrderRequest order);
+    Call<modelApiOrderResponse> postModelApiOrder(@QueryMap Map<String, String> params, @Body modelApiOrderRequest order, @Header("Authorization") String token);
 
 }

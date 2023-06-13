@@ -49,10 +49,11 @@ public class CreateOrderServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
         modelApiOrderRequest orderRequest = new modelApiOrderRequest();
-        
 
         try (PrintWriter out = response.getWriter(); BufferedReader reader = request.getReader()) {
 
+            //obtenemos el token de usuario
+            String token = "EAAAEL_ZvkgzVT9QC59YZA718G1UPSd-GYaiGlJ5b5oA3OJokpgh-7QI8JEvyGcL";
             //obtenemos el json del formulario
             JSONObject jsonb = new JSONObject(reader.lines().collect(Collectors.joining(System.lineSeparator())));
 
@@ -61,20 +62,21 @@ public class CreateOrderServlet extends HttpServlet {
 
             //creacion de peticiones
             orderRequestApi orderApi = new orderRequestApi();
-            modelApiOrderResponse bodyResponse = orderApi.runCallAllApis(orderRequest);
             
-            
+
+            modelApiOrderResponse bodyResponse = orderApi.runCallAllApis(orderRequest, token);
+
             //creamos las repuestas, si es exitoso o no 
             JSONObject respuesta = new JSONObject();
             respuesta.put("title", bodyResponse.getTitle());
-            respuesta.put("mensaje", bodyResponse.getTitle().equals("SUCCESS") ? "creado con exito": "algo fallo intenta nuevamente");
+            respuesta.put("mensaje", bodyResponse.getTitle().equals("SUCCESS") ? "creado con exito" : "algo fallo intenta nuevamente");
             respuesta.put("order_id", bodyResponse.getOrderId());
 
             //mandamos el json que se renderiza en el jsp
             out.print(respuesta.toString());
 
         } catch (IOException | RuntimeException | InterruptedException ex) {
-           
+
             Logger.getLogger(CreateOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
 
